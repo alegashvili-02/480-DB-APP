@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="8" alignment="CENTER"
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.ClientRegisterController">
+
+    <Label text="Client Register"/>
+
+    <TextField fx:id="email" promptText="Email"/>
+    <TextField fx:id="name" promptText="Name"/>
+    <TextField fx:id="city" promptText="City"/>
+    <TextField fx:id="street" promptText="Street"/>
+    <TextField fx:id="number" promptText="Street Number"/>
+    <TextField fx:id="card" promptText="Credit Card"/>
+
+    <Button text="Register" onAction="#register"/>
+
+    <Button text="Back" onAction="#back"/>
+
+    <Label fx:id="status"/>
+
+</VBox>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<VBox spacing="18" alignment="CENTER"
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.ManagerDashboardController">
+
+    <Label text="Manager Dashboard" style="-fx-font-size:18px; -fx-font-weight:bold;"/>
+
+    <Label fx:id="status" text="Welcome Manager"/>
+
+    <Separator/>
+
+    <!-- ========== HOTEL ========== -->
+    <Label text="Hotel Management"/>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Insert Hotel" onAction="#openHotelPage"/>
+        <Button text="Update Hotel" onAction="#openHotelPage"/>
+        <Button text="Delete Hotel" onAction="#openHotelPage"/>
+    </HBox>
+
+    <Separator/>
+
+    <!-- ========== ROOM ========== -->
+    <Label text="Room Management"/>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Insert Room" onAction="#openRoomPage"/>
+        <Button text="Update Room" onAction="#openRoomPage"/>
+        <Button text="Delete Room" onAction="#openRoomPage"/>
+    </HBox>
+
+    <Separator/>
+
+    <!-- ========== CLIENT ========== -->
+    <Label text="Client Management"/>
+
+    <Button text="Remove Client" onAction="#openClientPage"/>
+
+    <Separator/>
+
+    <Button text="Logout" onAction="#logout"/>
+
+</VBox>

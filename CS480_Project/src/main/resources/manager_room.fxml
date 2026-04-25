@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="10" alignment="CENTER"
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.ManagerRoomController">
+
+    <Label text="Room Management"/>
+
+
+    <Label text="INSERT: HotelID, RoomNum, Windows, Year, AccessType"/>
+    <Label text="UPDATE: HotelID + RoomNum + new values"/>
+    <Label text="DELETE: HotelID + RoomNum ONLY"/>
+
+    <TextField fx:id="hotelId" promptText="Hotel ID"/>
+    <TextField fx:id="roomNum" promptText="Room Number"/>
+    <TextField fx:id="windows" promptText="Windows"/>
+    <TextField fx:id="year" promptText="Year"/>
+    <TextField fx:id="access" promptText="Access Type"/>
+
+    <Button text="Insert Room" onAction="#insert"/>
+    <Button text="Update Room" onAction="#update"/>
+    <Button text="Delete Room" onAction="#delete"/>
+
+    <Label fx:id="status"/>
+
+    <Button text="Back" onAction="#back"/>
+</VBox>

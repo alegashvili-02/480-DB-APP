@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<VBox spacing="10" alignment="CENTER"
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.ManagerLoginController">
+
+    <Label text="Manager Login"/>
+
+    <TextField fx:id="ssnField" promptText="SSN"/>
+
+    <Button text="Login" onAction="#login"/>
+
+    <Button text="Register" onAction="#goRegister"/>
+
+    <Button text="Back" onAction="#back"/>
+
+    <Label fx:id="status"/>
+
+</VBox>

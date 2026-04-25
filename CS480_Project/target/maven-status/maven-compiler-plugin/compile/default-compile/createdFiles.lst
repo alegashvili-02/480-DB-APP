@@ -1,0 +1,16 @@
+org\example\ManagerDashboardController.class
+org\example\SceneUtil.class
+org\example\Main.class
+org\example\ClientUpdateController.class
+org\example\ClientLoginController.class
+org\example\DBConnection.class
+org\example\ManagerHotelController.class
+org\example\Manager.class
+org\example\ManagerRoomController.class
+org\example\MainController.class
+org\example\ManagerLoginController.class
+org\example\ClientRegisterController.class
+org\example\ManagerRegisterController.class
+org\example\Client.class
+org\example\ClientDashboardController.class
+org\example\ManagerClientController.class

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="10" alignment="CENTER"
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.ManagerHotelController">
+
+    <Label text="Hotel Management"/>
+
+    <Label text="INSERT: HotelID, City, Street, Number, Name"/>
+    <Label text="UPDATE: HotelID (required) + fields to change"/>
+    <Label text="DELETE: HotelID only"/>
+
+    <TextField fx:id="hotelId" promptText="Hotel ID"/>
+    <TextField fx:id="city" promptText="City"/>
+    <TextField fx:id="street" promptText="Street"/>
+    <TextField fx:id="number" promptText="Number"/>
+    <TextField fx:id="name" promptText="Hotel Name"/>
+
+    <Button text="Insert Hotel" onAction="#insert"/>
+    <Button text="Update Hotel" onAction="#update"/>
+    <Button text="Delete Hotel" onAction="#delete"/>
+
+    <Label fx:id="status"/>
+
+    <Button text="Back" onAction="#back"/>
+</VBox>
