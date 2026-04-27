@@ -1,6 +1,7 @@
 package org.example;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -162,4 +163,263 @@ public class Client {
             return false;
         }
     }
+
+
+    // ================= searchAvailableRooms =================
+    public static ResultSet searchAvailableRooms(Date start, Date end) {
+
+        String sql =
+                "SELECT h.Name, h.HotelID, r.RoomNum " +
+                        "FROM Room r " +
+                        "JOIN Hotel h ON r.HotelID = h.HotelID " +
+                        "WHERE NOT EXISTS (" +
+                        "  SELECT 1 FROM Booking b " +
+                        "  WHERE b.HotelID = r.HotelID " +
+                        "    AND b.RoomNum = r.RoomNum " +
+                        "    AND NOT (b.EndDate < ? OR b.StartDate > ?)" +
+                        ")";
+
+        try {
+            Connection conn = DBConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setDate(1, start);
+            ps.setDate(2, end);
+
+            return ps.executeQuery();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    // ================= bookRoom =================
+    public static boolean bookRoom(
+            String email,
+            int hotelId,
+            int roomNum,
+            Date start,
+            Date end) {
+
+        String checkSql =
+                "SELECT 1 FROM Booking b " +
+                        "WHERE b.HotelID=? AND b.RoomNum=? " +
+                        "AND NOT (b.EndDate < ? OR b.StartDate > ?)";
+
+        String insertSql =
+                "INSERT INTO Booking (BookingID, PricePerDay, RoomNum, HotelID, Email, StartDate, EndDate) " +
+                        "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = DBConnection.getConnection()) {
+
+            PreparedStatement check = conn.prepareStatement(checkSql);
+            check.setInt(1, hotelId);
+            check.setInt(2, roomNum);
+            check.setDate(3, start);
+            check.setDate(4, end);
+
+            ResultSet rs = check.executeQuery();
+
+            if (rs.next()) {
+                return false;
+            }
+
+            PreparedStatement insert = conn.prepareStatement(insertSql);
+
+            int bookingId = (int) (System.currentTimeMillis() % 1000000);
+
+            insert.setInt(1, bookingId);
+            insert.setInt(2, 100);
+            insert.setInt(3, roomNum);
+            insert.setInt(4, hotelId);
+            insert.setString(5, email);
+            insert.setDate(6, start);
+            insert.setDate(7, end);
+
+            insert.executeUpdate();
+
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+    // ================= autoBook =================
+    public static String autoBook(String email, String hotelName, Date start, Date end) {
+
+        try (Connection conn = DBConnection.getConnection()) {
+
+            conn.setAutoCommit(false);
+
+            try {
+                PreparedStatement ps = conn.prepareStatement(
+                        "SELECT r.RoomNum, h.HotelID " +
+                                "FROM Room r JOIN Hotel h ON r.HotelID = h.HotelID " +
+                                "WHERE h.Name = ? AND NOT EXISTS (" +
+                                "  SELECT 1 FROM Booking b " +
+                                "  WHERE b.HotelID = r.HotelID AND b.RoomNum = r.RoomNum " +
+                                "  AND NOT (b.EndDate < ? OR b.StartDate > ?))"
+                );
+
+                ps.setString(1, hotelName);
+                ps.setDate(2, start);
+                ps.setDate(3, end);
+
+                ResultSet rs = ps.executeQuery();
+
+                if (rs.next()) {
+                    int room = rs.getInt("RoomNum");
+                    int hotelId = rs.getInt("HotelID");
+
+
+                    PreparedStatement insert = conn.prepareStatement(
+                            "INSERT INTO Booking VALUES (?, ?, ?, ?, ?, ?, ?)");
+
+                    int bookingId = (int) (System.currentTimeMillis() % 100000);
+
+                    insert.setInt(1, bookingId);
+                    insert.setInt(2, 100);
+                    insert.setInt(3, room);
+                    insert.setInt(4, hotelId);
+                    insert.setString(5, email);
+                    insert.setDate(6, start);
+                    insert.setDate(7, end);
+
+                    insert.executeUpdate();
+
+                    conn.commit();
+
+                    return "Booked!\nHotel: " + hotelName +
+                            "\nRoom: " + room +
+                            "\nDate: " + start + " → " + end;
+
+                } else {
+                    PreparedStatement alt = conn.prepareStatement(
+                            "SELECT DISTINCT h.Name " +
+                                    "FROM Room r JOIN Hotel h ON r.HotelID = h.HotelID " +
+                                    "WHERE NOT EXISTS (" +
+                                    "  SELECT 1 FROM Booking b " +
+                                    "  WHERE b.HotelID = r.HotelID AND b.RoomNum = r.RoomNum " +
+                                    "  AND NOT (b.EndDate < ? OR b.StartDate > ?))"
+                    );
+
+                    alt.setDate(1, start);
+                    alt.setDate(2, end);
+
+                    ResultSet rs2 = alt.executeQuery();
+
+                    StringBuilder sb = new StringBuilder("No room available.\n\nAlternative hotels:\n");
+
+                    while (rs2.next()) {
+                        sb.append("- ").append(rs2.getString("Name")).append("\n");
+                    }
+
+                    conn.commit();
+
+                    return sb.toString();
+                }
+
+            } catch (Exception e) {
+                conn.rollback();
+                throw e;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Error: " + e.getMessage();
+        }
+    }
+
+
+    // ================= ClientBookings =================
+    public static ResultSet getBookings(String email) {
+
+        try {
+            Connection conn = DBConnection.getConnection();
+
+            String sql =
+                    "SELECT b.StartDate, b.EndDate, " +
+                            "b.PricePerDay, " +
+                            "(b.PricePerDay * (b.EndDate - b.StartDate)) AS TotalPrice, " +
+                            "h.Name AS HotelName, r.RoomNum " +
+                            "FROM Booking b " +
+                            "JOIN Hotel h ON b.HotelID = h.HotelID " +
+                            "JOIN Room r ON b.HotelID = r.HotelID AND b.RoomNum = r.RoomNum " +
+                            "WHERE b.Email = ? " +
+                            "ORDER BY b.StartDate";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, email);
+
+            return ps.executeQuery();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    // ================= canReview =================
+
+    public static boolean canReview(String email, int hotelId) {
+
+        String sql =
+                "SELECT 1 FROM Booking " +
+                        "WHERE Email = ? AND HotelID = ? " +
+                        "LIMIT 1";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, email);
+            ps.setInt(2, hotelId);
+
+            ResultSet rs = ps.executeQuery();
+
+            return rs.next();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // ================= submitReview =================
+    public static boolean submitReview(String email, int hotelId, int rating, String message) {
+
+        try (Connection conn = DBConnection.getConnection()) {
+
+
+            if (!canReview(email, hotelId)) {
+                return false;
+            }
+
+
+            PreparedStatement ps = conn.prepareStatement(
+                    "INSERT INTO Review (ReviewID, HotelID, Rating, Email, Message) " +
+                            "VALUES (?, ?, ?, ?, ?)");
+
+            int reviewId = (int) (System.currentTimeMillis() % 100000);
+
+            ps.setInt(1, reviewId);
+            ps.setInt(2, hotelId);
+            ps.setInt(3, rating);
+            ps.setString(4, email);
+            ps.setString(5, message);
+
+            ps.executeUpdate();
+
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }

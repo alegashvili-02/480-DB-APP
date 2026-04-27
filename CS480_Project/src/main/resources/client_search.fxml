@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="12" alignment="CENTER"
+      fillWidth="false"
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.ClientSearchController">
+
+    <Label text="Search Available Rooms"/>
+
+
+    <Label text="Start Date (YYYY-MM-DD)"/>
+    <TextField fx:id="startDate" promptText="e.g. 2026-05-01"/>
+
+    <Label text="End Date (YYYY-MM-DD)"/>
+    <TextField fx:id="endDate" promptText="e.g. 2026-05-05"/>
+
+    <Button text="Search" onAction="#search"/>
+
+
+    <Label text="Available Rooms (Hotel | Room)"/>
+
+    <TextArea fx:id="resultArea"
+              prefWidth="350"
+              maxWidth="350"
+              prefHeight="150"
+              wrapText="true"
+              editable="false">
+        <VBox.margin>
+            <Insets left="10" right="10"/>
+        </VBox.margin>
+    </TextArea>
+
+
+    <Label text="Book a Room (Enter from results above)"/>
+
+    <TextField fx:id="hotelIdField" promptText="Hotel ID"/>
+    <TextField fx:id="roomNumField" promptText="Room Number"/>
+
+    <Button text="Book Room" onAction="#book"/>
+
+    <!-- 返回 -->
+    <Button text="Back" onAction="#back"/>
+
+</VBox>

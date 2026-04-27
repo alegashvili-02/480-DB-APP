@@ -35,7 +35,11 @@ public class ClientLoginController {
                 ClientDashboardController controller = loader.getController();
                 controller.setEmail(email);
 
-                stage().setScene(new Scene(root, 400, 300));
+                Scene scene = new Scene(root, 500, 500);
+                scene.getStylesheets().add(
+                        getClass().getResource("/style.css").toExternalForm()
+                );
+                stage().setScene(scene);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -49,11 +53,11 @@ public class ClientLoginController {
 
     @FXML
     public void goRegister() {
-        SceneUtil.switchScene(stage(), "client_register.fxml", 500, 400);
+        SceneUtil.switchScene(stage(), "client_register.fxml", 500, 500);
     }
 
     @FXML
     public void back() {
-        SceneUtil.switchScene(stage(), "main.fxml", 500, 350);
+        SceneUtil.switchScene(stage(), "main.fxml", 500, 500);
     }
 }

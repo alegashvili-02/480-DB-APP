@@ -47,7 +47,7 @@ public class ClientUpdateController {
     @FXML
     public void back() {
         ClientDashboardController controller =
-                SceneUtil.switchScene(stage(), "client_dashboard.fxml", 500, 350);
+                SceneUtil.switchScene(stage(), "client_dashboard.fxml", 500, 500);
 
         if (controller != null) {
             controller.setEmail(email);

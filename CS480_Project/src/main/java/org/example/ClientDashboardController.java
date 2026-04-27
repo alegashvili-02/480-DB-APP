@@ -31,6 +31,48 @@ public class ClientDashboardController {
     }
 
     @FXML
+    public void searchRooms() {
+
+        ClientSearchController c =
+                SceneUtil.switchScene(stage(), "client_search.fxml", 700, 700);
+
+        if (c != null) {
+            c.setEmail(currentEmail);
+        }
+    }
+
+
+    @FXML
+    public void goAutoBook() {
+        ClientAutoBookController c =
+                SceneUtil.switchScene(stage(), "client_autobook.fxml", 500, 500);
+
+        if (c != null) {
+            c.setEmail(currentEmail);
+        }
+    }
+
+    @FXML
+    public void goMyBookings() {
+        ClientBookingsController c =
+                SceneUtil.switchScene(stage(), "client_bookings.fxml", 500, 500);
+
+        if (c != null) c.setEmail(currentEmail);
+    }
+
+    @FXML
+    public void goReview() {
+
+        ClientReviewController c =
+                SceneUtil.switchScene(stage(), "client_review.fxml", 500, 500);
+
+        if (c != null) {
+            c.setEmail(currentEmail);
+        }
+    }
+
+
+    @FXML
     public void logout() {
         SceneUtil.switchScene(stage(), "main.fxml", 500, 350);
     }

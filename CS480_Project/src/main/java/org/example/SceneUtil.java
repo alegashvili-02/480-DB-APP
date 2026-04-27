@@ -15,7 +15,13 @@ public class SceneUtil {
 
             Parent root = loader.load();
 
-            stage.setScene(new Scene(root, w, h));
+            Scene scene = new Scene(root, w, h);
+
+            scene.getStylesheets().add(
+                    SceneUtil.class.getResource("/style.css").toExternalForm()
+            );
+
+            stage.setScene(scene);
 
             return loader.getController();
 

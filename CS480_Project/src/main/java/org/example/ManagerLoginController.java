@@ -20,7 +20,7 @@ public class ManagerLoginController {
             int ssn = Integer.parseInt(ssnField.getText());
 
             if (Manager.login(ssn)) {
-                SceneUtil.switchScene(stage(), "manager_dashboard.fxml", 500, 500);
+                SceneUtil.switchScene(stage(), "manager_dashboard.fxml", 750, 500);
             } else {
                 status.setText("Not found");
             }

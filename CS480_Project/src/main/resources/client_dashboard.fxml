@@ -18,6 +18,14 @@
 
     <Button text="Update Info" onAction="#updateInfo"/>
 
+    <Button text="Search and Book Rooms" onAction="#searchRooms"/>
+
+    <Button text="Auto Book Room" onAction="#goAutoBook"/>
+
+    <Button text="My Bookings" onAction="#goMyBookings"/>
+
+    <Button text="Submit Review" onAction="#goReview"/>
+
     <Button text="Logout" onAction="#logout"/>
 
 </VBox>

@@ -14,7 +14,7 @@ public class Main extends Application {
                 getClass().getResource("/main.fxml")
         );
 
-        Scene scene = new Scene(loader.load(), 500, 350);
+        Scene scene = new Scene(loader.load(), 500, 500);
         scene.getStylesheets().add(
                 getClass().getResource("/style.css").toExternalForm()
         );

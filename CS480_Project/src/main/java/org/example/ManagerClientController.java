@@ -77,7 +77,7 @@ public class ManagerClientController {
     @FXML
     public void back() {
         ManagerDashboardController c =
-                SceneUtil.switchScene(stage(), "manager_dashboard.fxml", 500, 500);
+                SceneUtil.switchScene(stage(), "manager_dashboard.fxml", 750, 500);
         if (c != null) c.setSsn(ssn);
     }
 }

@@ -23,12 +23,12 @@ public class MainController {
     @FXML
     public void goClient() {
         Stage stage = (Stage) dbStatus.getScene().getWindow();
-        SceneUtil.switchScene(stage, "client_login.fxml", 400, 300);
+        SceneUtil.switchScene(stage, "client_login.fxml", 500, 500);
     }
 
     @FXML
     public void goManager() {
         Stage stage = (Stage) dbStatus.getScene().getWindow();
-        SceneUtil.switchScene(stage, "manager_login.fxml", 400, 300);
+        SceneUtil.switchScene(stage, "manager_login.fxml", 500, 500);
     }
 }

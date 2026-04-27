@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="15" alignment="CENTER"
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.ManagerProblemHotelController">
+
+    <Label text="Problematic Hotels Report"
+           style="-fx-font-size:18px;"/>
+
+    <Button text="Generate Report" onAction="#load"/>
+
+    <TextArea fx:id="resultArea" prefHeight="300" prefWidth="450"/>
+
+    <Button text="Back" onAction="#back"/>
+
+</VBox>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="15" alignment="CENTER"
+      xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.ManagerTopKController">
+
+    <Label text="Top-K Clients" style="-fx-font-size:18px;"/>
+
+    <Label text="Enter k:"/>
+    <TextField fx:id="kField" promptText="e.g. 5"/>
+
+    <Button text="Search" onAction="#search"/>
+
+    <TextArea fx:id="resultArea" prefHeight="200"/>
+
+    <Button text="Back" onAction="#back"/>
+
+</VBox>
